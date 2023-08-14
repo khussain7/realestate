@@ -10,12 +10,12 @@ class propertyAmenities extends Model
     use HasFactory;
     
     protected $fillable = [
-        'PropertyId',
-        'BarbequeArea',
-        'DayCareCenter',
-        'KidsPlayArea',
-        'LawnOrGarden',
-        'CafeteriaOrCanteen',
+         'PropertyId',
+         'BarbequeArea',
+         'DayCareCenter',
+         'KidsPlayArea',
+         'LawnOrGarden',
+         'CafeteriaOrCanteen',
          'HealthAndFitness',
          'GymOrHealthClub',
          'Jacuzzi',

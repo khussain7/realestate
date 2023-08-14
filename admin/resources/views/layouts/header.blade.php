@@ -17,7 +17,11 @@
        <link rel="stylesheet" href="{{ asset('build/template/css/custom.css') }}" />
        <link rel="stylesheet" href="{{ asset('build/template/css/carousel.css') }}" />
        <link rel="stylesheet" href="{{ asset('build/template/datatables/datatables.min.css') }}" />
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+       <link rel="stylesheet" href="{{ asset('build/template/css/bootstrap-icons.css') }}" />
+       <link rel="stylesheet" href="{{ asset('build/template/css/select2.min.css') }}" />
+       <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"> -->
+
 
    <!-- Scripts -->
        
@@ -46,7 +50,7 @@
                        <nav class="main-menu">
                            <ul>
                                <li class="">
-                                <a href="{{ url('/propertieslist') }}">Properties</a>
+                                <a href="{{ url('/propertyr/propertylist') }}">Properties</a>
                                </li>
                                <li class="">
                                <a href="{{ url('/bannerr/addbanner')}}">Banners</a>
@@ -143,6 +147,7 @@
 
    @yield('content')
 
+
         <script src="{{ asset('build/template/js/vendor/modernizr-2.8.3.min.js') }}"></script>
         <script src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.22&key=AIzaSyDAq7MrCR1A2qIShmjbtLHSKjcEIEBEEwM"></script>
         <script src="{{ asset('build/template/js/vendor/jquery-1.12.4.min.js') }}"></script>
@@ -156,7 +161,9 @@
         <script src="{{ asset('build/template/js/feildvalidate.js') }}"></script>
         <script src="{{ asset('build/template/ckeditor5/ckeditor.js') }}"></script>
         <script src="{{ asset('build/template/datatables/datatables.min.js') }}"></script>
-
+        <script src="{{ asset('build/template/js/select2.min.js') }}"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js" integrity="sha512-oQq8uth41D+gIH/NJvSJvVB85MFk1eWpMK6glnkg6I7EdMqC1XVkW7RxLheXwmFdG03qScCM7gKS/Cx3FYt7Tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script> -->
     @stack('extra-js')
     </body>
 </html>

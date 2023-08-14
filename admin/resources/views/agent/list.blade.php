@@ -75,14 +75,13 @@
             } );
 
             function confirmation(){
-              e.preventDefault();
-      var result = confirm("Are you sure to delete user");
-      if(result){
-         return true;
-      }
-      else{
-        return false;
-      }
-    }
+                var result = confirm("Are you sure to delete user");
+                if(result){
+                  return true;
+                }
+                else{
+                  return false;
+                }
+            }
 	</script>
 @endpush

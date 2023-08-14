@@ -46,10 +46,12 @@
                                             <span class="error-msg"></span>
                                 </div>
                                 <div class="col-md-3 col-12 mb-30">
-                                    <label>Agent Role</label>
+                                    <label>Employee Title</label>
                                     <select id="role" name="role" class="nice-select" style="display: none;">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Super Admin">Super Admin</option>
+                                            <option value="CEO">CEO</option>
+                                            <option value="Director">Director</option>
+                                            <option value="Sales">Sales</option>
+                                            <option value="Administrator">Administrator</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 col-12 mb-30">

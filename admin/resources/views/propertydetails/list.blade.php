@@ -10,7 +10,7 @@
       </a>
 
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="{{ url('/propertydetails') }}" class="btn btnhref">Add New Property</a></li>
+        <li class="nav-item"><a href="{{ url('/propertyr/addproperty') }}" class="btn btnhref">Add New Property</a></li>
       </ul>
 </header>
 
@@ -29,17 +29,21 @@
       </thead>  
       <tbody>
       
-@foreach( $propertydetailslist as $pdata)
+@foreach( $propertylist as $pdata)
+@php
+   $format_numberPrice = number_format($pdata->Price, 2, ".", ",");
+   $format_numberArea = number_format($pdata->Area, 2, ".", ",");
+ @endphp
    <tr>
-      <td>{{ $pdata['Property_Name'] }}</td>
-      <td>{{ $pdata['Property_Price'] }}</td>
-      <td>{{ $pdata['Property_Size'] }}</td>
-      <td>{{ $pdata['Property_Bedrooms'] }}</td>
-      <td>{{ $pdata['Property_Bath'] }}</td>
-      <td>{{ $pdata['Property_Category'] }}</td>
+      <td>{{ $pdata['ReferanceNumber'] }}</td>
+      <td>{{ $format_numberPrice }}</td>
+      <td>{{ $format_numberArea }}</td>
+      <td>{{ $pdata['Bedroorms'] }}</td>
+      <td>{{ $pdata['Bathrooms'] }}</td>
+      <td>{{ $pdata['Purpose'] }}</td>
       <td>
-        <i class="bi bi-trash handover pr-10"></i>
-        <i class="bi bi-pencil-square handover"></i>
+         <span class="badge bg-danger">Delete</span>
+         <span class="badge bg-primary">View</span>
       </td>
     </tr>
 @endforeach
