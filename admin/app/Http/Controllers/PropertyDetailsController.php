@@ -78,6 +78,7 @@ class PropertyDetailsController extends Controller
             $propertiescreate->MaintenanceFee = $request->MaintenanceFeeFor;
             $propertiescreate->LocationGoogleLink = "google link";
             $propertiescreate->CurrentStatus = "Amenities";
+            $propertiescreate->AddedAsBanner = "No";
             $propertiescreate->CreatedBy = auth()->user()->id;
             $propertiescreate->CreateOn = date('Y-m-d H:i:s');
 

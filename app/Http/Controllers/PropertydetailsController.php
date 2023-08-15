@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\properties;
+use App\Models\propertydetails;
+use App\Models\propertyimages;
 
 
 class PropertydetailsController extends Controller
@@ -16,12 +16,33 @@ class PropertydetailsController extends Controller
     public function index()
     {
         //
-        $propertydetailslist = properties::where('CurrentStatus', 'Active')->get();
-        $bannerlist = DB::table('properties')->select('properties.*','banners.BannerImage', 'banners.BannerImage') 
-                                       ->join('banners','properties.PropertyId','=','banners.PropertyId')
-                                       ->where('properties.AddedAsBanner','=','Yes')
+        $propertydetailslist = propertydetails::where('CurrentStatus', 'Active')->get();
+        // $propertyimages = propertyimages::where('CurrentStatus', 'Imageupload')->get();
+        $bannerlist = DB::table('propertydetails')->select('propertydetails.PropertyId','propertydetails.Category', 'propertydetails.SubCategory',
+                                        'propertydetails.Purpose','propertydetails.Furnished','propertydetails.ReferanceNumber','propertydetails.City',
+                                        'propertydetails.Price','propertydetails.Area','propertydetails.PermitNumber','propertydetails.Bedroorms','propertydetails.Bathrooms',
+                                        'propertydetails.Rent',
+                                        'banners.BannerImage', 'banners.BannerImage') 
+                                       ->join('banners','propertydetails.PropertyId','=','banners.PropertyId')
+                                       ->where('propertydetails.AddedAsBanner','=','Yes')
                                        ->get();
 
+             $bannerlist->transform(function ($item) {
+            $pimg = propertyimages::where('PropertyId', $item->PropertyId)
+                                ->get(['ImageName']);
+            if ($pimg->count()) {
+                $item->pimg = $pimg;
+            }
+            return $item;
+        });
+
+        // $bannerlist = propertydetails::orderBy(function ($query) {
+        //      $query->select('ImageName')
+        //          ->from('propertyimages')
+        //          ->whereColumn('PropertyId', 'propertydetails.PropertyId');
+        //  }) ->where('propertydetails.AddedAsBanner','=','Yes')->get();
+
+        //    dd($bannerlist);
         return view('welcome',compact('propertydetailslist', 'bannerlist'));
     }
 

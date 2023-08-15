@@ -26,6 +26,24 @@
       </ul>
 </header>
 
+<div class="row row-100">
+    <div class="col">
+        @if(Session::has('success'))
+        <div class="alert alert-danger">
+            {{ Session::get('success') }}
+            @php
+                Session::forget('success');
+            @endphp
+        </div>
+        @endif
+    </div>
+</div>
+<form id="postaction" method="POST" action="{{ url('/agentr/actionpage') }}" enctype="multipart/form-data" class="form-inline">
+    @csrf
+      <input type="hidden" id="EmployeeId" name="EmployeeId" />
+      <input type="hidden" id="ActionTaken" name="ActionTaken" />
+</form>
+
 <div class="">
     <table class="table table-striped table-hover" id="list">
       <thead>
@@ -52,8 +70,10 @@
       <td>{{ $pdata->joindate }}</td>
       <td>
       <h4>
-        <a href="{{ url('agentr/agentdetails/'.$pdata->id) }}" class="btn extra-maring btn-warning btn-sm">View Details</a>
-        <a href="#" onclick="confirmation()" class="btn btn-danger extra-maring btn-warning btn-sm">Delete</a>
+      <span class="badge bg-primary" onclick="viewproperty('{{ $pdata->id }}', 'view')">View</span>
+         <span class="badge bg-danger"  onclick="viewproperty('{{ $pdata->id }}', 'delete')">Delete</span>
+        <!-- <a href="#" class="btn extra-maring btn-warning btn-sm">View Details</a> {{ url('agentr/agentdetails/'.$pdata->id) }} 
+        <a href="#" onclick="confirmation()" class="btn btn-danger extra-maring btn-warning btn-sm">Delete</a> -->
         <!-- {{ url('agentr/remove/'.$pdata->id) }} -->
       </td>
     </tr>
@@ -82,6 +102,21 @@
                 else{
                   return false;
                 }
+            }
+
+            function viewproperty(pid, actiontaken){
+              let message = (actiontaken === 'delete') ? "Are you sure you want to delete employee details" : "";
+              if (confirm(message)) {
+                  //If user say 'yes' to confirm
+                  document.getElementById("EmployeeId").value = pid;
+                  document.getElementById("ActionTaken").value = actiontaken;
+                  let postaction = document.getElementById("postaction");
+                  postaction.submit();
+                } else {
+                   return false;
+                }
+                
+             
             }
 	</script>
 @endpush

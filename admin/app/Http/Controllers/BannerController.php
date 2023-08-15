@@ -22,11 +22,11 @@ class BannerController extends Controller
         return view('banners.list',compact('bannerlist'));
     }
 
-    public function Index()
+    public function index()
     {
         $propertydetailslist = propertydetails::where('CurrentStatus', 'Active')->where('AddedAsBanner', 'No')->get(); // 
         $bannerdetailslist = propertydetails::where('CurrentStatus', 'Active')->where('AddedAsBanner', 'Yes')->get(); //
-        return view('banners.index',compact('propertydetailslist' , 'bannerdetailslist'));
+        return view('banners.setbanner',compact('propertydetailslist' , 'bannerdetailslist'));
     }
 
     public function add(Request $request)

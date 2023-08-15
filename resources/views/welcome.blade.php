@@ -20,7 +20,7 @@
                                <h1 class="title">
                                     {{ $bdata->Category }}
                                 </h1>
-                               <span class="location"><img src="assets/images/icons/hero-marker.png" alt=""> {{  $bdata->PropertyName }} - {{ $bdata->City }}</span>
+                               <span class="location"><img src="assets/images/icons/hero-marker.png" alt=""> {{ $bdata->City }}</span>
                                <div class="type-wrap">
                                    <span class="type">AED</span>
                                    @php
@@ -34,19 +34,12 @@
                                        <img src="{{ asset('build/template/images/icons/hero-area.png') }}" alt=""><span>{{ $bdata->Area }} SqFt</span>
                                    </li>
                                    <li>
-                                       <img src="{{ asset('build/template/images/icons/hero-bed.png') }}" alt=""><span> {{ $bdata->Beds }} Bed</span>
+                                       <img src="{{ asset('build/template/images/icons/hero-bed.png') }}" alt=""><span> {{ $bdata->Bedroorms }} Bed</span>
                                    </li>
                                    <li>
-                                       <img src="{{ asset('build/template/images/icons/hero-bath.png') }}" alt=""><span> {{ $bdata->Bath }} Bath</span>
+                                       <img src="{{ asset('build/template/images/icons/hero-bath.png') }}" alt=""><span> {{ $bdata->Bathrooms }} Bath</span>
                                    </li>
-                                   @if($bdata->Parking == "yes")
-                                   
-                                    <li>
-                                       <img src="{{ asset('build/template/images/icons/hero-parking.png') }}" alt=""><span> Parking</span>
-                                   </li>
-                                   
-                                   @endif
-                                   
+                                  
                                </ul>
                                
                                <div class="linkdetails">
@@ -184,7 +177,7 @@
                  
 @foreach( $propertydetailslist as $pdata)
         @php
-            $imgname = explode(',', $pdata->Attachments);
+        echo $pdata->pimg['ImageName'];
             $english_format_number = number_format($pdata->Price, 2, ".", ",");
         @endphp
    <!--Property start-->
@@ -192,29 +185,29 @@
                     <div class="property-inner">
                         <div class="image">
                             <a href="{{ url('/propertiesview/'.$pdata['PropertyId']) }}">
-                                <img src="{{asset('../admin/public/files/'.$imgname[0])}}" class="d-block w-100 img-view"  alt="{{$imgname[0]}}">
+                                <img src="" class="d-block w-100 img-view"  alt="">
                             </a>
                             <ul class="property-feature">
                                 <li>
                                     <span class="area"><img src="{{ asset('build/template/images/icons/area.png') }}" alt="">{{ $pdata['Area'] }} SqFt</span>
                                 </li>
                                 <li>
-                                    <span class="bed"><img src="{{ asset('build/template/images/icons/bed.png') }}" alt="">{{ $pdata['Beds'] }}</span>
+                                    <span class="bed"><img src="{{ asset('build/template/images/icons/bed.png') }}" alt="">{{ $pdata['Bedroorms'] }}</span>
                                 </li>
                                 <li>
-                                    <span class="bath"><img src="{{ asset('build/template/images/icons/bath.png') }}" alt="">{{ $pdata['Bath'] }}</span>
+                                    <span class="bath"><img src="{{ asset('build/template/images/icons/bath.png') }}" alt="">{{ $pdata['Bathrooms'] }}</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="content">
                             <div class="left">
-                                <h3 class="title"><a href="single-properties.html">{{ $pdata['PropertyName'] }}</a></h3>
+                                <h3 class="title"><a href="single-properties.html">{{ $pdata['ReferanceNumber '] }}</a></h3>
                                 <span class="location"><img src="{{ asset('build/template/images/icons/marker.png') }}" alt="">{{ $pdata['City'] }}</span>
                             </div>
                             <div class="right">
                                 <div class="type-wrap">
                                     <span class="price1">AED {{ $english_format_number }}</span>
-                                    <span class="type">{{ $pdata['Category'] }}</span>
+                                    <span class="type">{{ $pdata['Purpose'] }}</span>
                                 </div> 
                             </div>
                         </div>

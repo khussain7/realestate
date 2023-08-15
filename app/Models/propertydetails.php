@@ -10,21 +10,43 @@ class propertydetails extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Property_Name',
-        'Property_Description',
-        'Property_Price',
-        'Property_Bedrooms',
-        'Property_Bath',
-        'Property_Category',
-         'Property_Current_Status',
-         'Property_Location',
-         'Property_Map_Link',
-         'Created_By',
-         'created_at',
-         'Property_Images',
-         'Updated_By',
-         'updated_at',
-         'Property_Attachments',
-         'Property_Size'
+        'PropertyId',
+        'Category',
+        'SubCategory',
+        'Furnished',
+        'Purpose',
+        'LocationGoogleLink',
+        'City',
+        'Address',
+        'ReferanceNumber',
+        'Title',
+        'Description',
+        'Price',
+        'Area',
+        'PermitNumber',
+        'Bedroorms',
+        'Bathrooms',
+        'OccupancyStatus',
+        'AgentId',
+        'OwnershipStatus',
+        'Rent',
+        'RentFrequency',
+        'MinimumContractPeriod',
+        'VacatingNoticePeriod',
+        'MaintenanceFee',
+        'PaidBy',
+        'Imageswithbanner',
+        'CreatedBy',
+        'CreateOn',
+        'UpdateBy',
+        'UpdatedOn',
+        'CurrentStatus',
+        'AddedAsBanner'
     ];
+
+    public function propertyimg()
+    {
+        return $this->hasMany(propertyimages::class, 'PropertyId','PropertyId');
+    }
 }
+

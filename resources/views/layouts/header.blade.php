@@ -67,10 +67,10 @@
                                <li class="has-dropdown"><a href="#">About us</a>
                                    <ul class="sub-menu">
                                        <li class="fixborderbox"><a href="#">Our Team</a></li>
-                                       <li class="fixborderbox"><a href="#">Our Partners</a></li>
+                                       <!-- <li class="fixborderbox"><a href="#">Our Partners</a></li>
                                        <li class="fixborderbox"><a href="#">Awards &amp; Achievements</a></li>
                                        <li class="fixborderbox"><a href="#">Testimonials</a></li>
-                                       <li class="fixborderbox"><a href="#">Blogs</a></li>
+                                       <li class="fixborderbox"><a href="#">Blogs</a></li> -->
                                        <li class="fixborderbox"><a href="#">Careers</a></li>
                                        <li class=""><a href="#">Contact us</a></li>
                                    </ul>
