@@ -168,6 +168,16 @@ class PropertyDetailsController extends Controller
         $propertyamenitiescreate->CurrentStatus ="Imageupload";
 
         if(!$propertyamenitiescreate->save()){
+
+            $updatePropertyDetails = [
+                'CurrentStatus' => 'Imageuploads'
+                ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                ,'updated_at' => date('Y-m-d H:i:s')
+                ,'UpdateBy' => auth()->user()->id
+             ];
+            
+             $propretyUpdates = propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails);    
+
             return redirect()->back()->with("success", "Fail to add amenities try again");
          }
         return Redirect::to('propertyr/uploadimages/'.$request->PropertyId)->with(['success' => 'Success add amenities to property!']);
@@ -237,16 +247,55 @@ class PropertyDetailsController extends Controller
                 // if(count($files)+1 != $i){
                 //      return redirect()->back()->with("success", "Fail to upload images try again!");
                 //   }
+
+                $updatePropertyDetails = [
+                    'CurrentStatus' => 'Active'
+                    ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                    ,'updated_at' => date('Y-m-d H:i:s')
+                    ,'UpdateBy' => auth()->user()->id
+                 ];
+                
+                 $propretyUpdates = propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails);   
+
                   return redirect()->back()->with("success", "Success uploaded images to the property back to list!");
      }
 
      public function list(){
         $propertylist = propertydetails::join('subcategories', 'subcategories.SubCategoryId', '=', 'propertydetails.SubCategory')
                                         ->join('categorys','categorys.CategoryId','=','propertydetails.Category')
-                                        ->get(['propertydetails.ReferanceNumber', 'propertydetails.Price', 'propertydetails.Area', 
+                                        ->where('propertydetails.CurrentStatus', 'Active')
+                                        ->get(['propertydetails.PropertyId','propertydetails.ReferanceNumber', 'propertydetails.City', 'propertydetails.Price', 'propertydetails.Area', 
                                                 'propertydetails.Bedroorms', 'propertydetails.Bathrooms', 'propertydetails.Purpose'
                                                 , 'subcategories.SubCategoryName', 'subcategories.SubCategoryName']);
 
         return view('propertydetails.list',compact('propertylist'));
+     }
+
+     public function actionpage(Request $request){
+       //  dd($request);
+        if($request->ActionTaken == "delete"){
+            $updatePropertyDetails = [
+                'CurrentStatus' => 'InActive'
+                ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                ,'updated_at' => date('Y-m-d H:i:s')
+                ,'UpdateBy' => auth()->user()->id
+             ];
+             $propretyUpdates = propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails); 
+
+            //  $propertylist = propertydetails::join('subcategories', 'subcategories.SubCategoryId', '=', 'propertydetails.SubCategory')
+            //                             ->join('categorys','categorys.CategoryId','=','propertydetails.Category')
+            //                             ->where('propertydetails.CurrentStatus', 'Active')
+            //                             ->get(['propertydetails.PropertyId','propertydetails.ReferanceNumber', 'propertydetails.City', 'propertydetails.Price', 'propertydetails.Area', 
+            //                                     'propertydetails.Bedroorms', 'propertydetails.Bathrooms', 'propertydetails.Purpose'
+            //                                     , 'subcategories.SubCategoryName', 'subcategories.SubCategoryName']);
+
+        return redirect()->back()->with("success", "Successfully deleted property details!");
+        //return view('propertydetails.list',compact('propertylist'))->with("success", "Successfully deleted property details!");
+        }
+        else
+        {
+            $propertydetail = propertydetails::where('PropertyId', $request->PropertyId)->get(); 
+
+        }
      }
 }

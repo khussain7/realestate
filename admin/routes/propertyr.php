@@ -18,6 +18,7 @@ Route::prefix('propertyr')->group(function () {
     Route::post('/uploadimages', [PropertyDetailsController::class, 'saveimages'])->middleware(['auth', 'verified'])->name('propertydetails.upload');
     // Get property list 
     Route::get('/propertylist', [PropertyDetailsController::class, 'list'])->middleware(['auth', 'verified'])->name('propertydetails.list');
+    Route::post('/actionpage', [PropertyDetailsController::class, 'actionpage'])->middleware(['auth', 'verified'])->name('propertydetails.list');
  });
 
 
