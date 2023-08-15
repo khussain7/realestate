@@ -177,7 +177,6 @@
                  
 @foreach( $propertydetailslist as $pdata)
         @php
-        echo $pdata->pimg['ImageName'];
             $english_format_number = number_format($pdata->Price, 2, ".", ",");
         @endphp
    <!--Property start-->
@@ -241,8 +240,6 @@
                                    <div class="col-md-6 col-12 mb-30"><input type="email" id="l_email" placeholder="Email"></div>
                                    <div class="col-md-6 col-12 mb-30"><input type="number" id="l_contact" placeholder="Contact Number"></div>
                                    <div class="col-12 mb-30"><label for="about_me">About Me</label><textarea id="about_me"></textarea></div>
-
-                                   
                                    <div class="col-12 mb-30"><button class="btn">Save Change</button></div>
                                </div>
                     </form>
