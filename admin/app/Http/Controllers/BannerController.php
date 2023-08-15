@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -13,6 +11,7 @@ use App\Models\banners;
 use App\Models\banner_log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\propertydetails;
 
 class BannerController extends Controller
 {
@@ -25,16 +24,17 @@ class BannerController extends Controller
 
     public function Index()
     {
-        $propertydetailslist = properties::where('CurrentStatus', 'Active')->where('AddedAsBanner', 'No')->get();
-        $bannerdetailslist = properties::where('CurrentStatus', 'Active')->where('AddedAsBanner', 'Yes')->get();
+        $propertydetailslist = propertydetails::where('CurrentStatus', 'Active')->where('AddedAsBanner', 'No')->get(); // 
+        $bannerdetailslist = propertydetails::where('CurrentStatus', 'Active')->where('AddedAsBanner', 'Yes')->get(); //
         return view('banners.index',compact('propertydetailslist' , 'bannerdetailslist'));
     }
 
     public function add(Request $request)
     {
+        // "jpg", "jpeg", "bmp", "gif", "png"
         $request->validate([
-            'PropertyId' => ['required'],
-            'BannerImage' => ['required','image', 'mimes:jpeg,png,jpg,gif,svg','max:2048']
+            'PropertyId' => ['required']
+            // 'BannerImage' => ['required','image', 'mimes:jpeg,png,jpg,gif,svg,bmp','max:2048']
         ]);
 
         $existingBanner = banners::where('PropertyId', $request->PropertyId);
@@ -65,7 +65,7 @@ class BannerController extends Controller
                                 ,'UpdateBy' => auth()->user()->id
                              ];
            $bannerUpdates = banners::where('PropertyId', $request->PropertyId)->update($updateBannerDetails);                             
-           $propertiesudpate = properties::where('PropertyId', $request->PropertyId)->update($updateDetails);
+           $propertiesudpate = propertydetails::where('PropertyId', $request->PropertyId)->update($updateDetails);
 
             if(!$bannerUpdates){
                return redirect()->back()->with("success", "Fail to add banner details try again");
@@ -98,7 +98,7 @@ class BannerController extends Controller
                                 ,'UpdateBy' => auth()->user()->id
                              ];
     
-           $propertiesudpate = properties::where('PropertyId', $request->PropertyId)->update($updateDetails);
+           $propertiesudpate = propertydetails::where('PropertyId', $request->PropertyId)->update($updateDetails);
     
             if(!$bannerscreate->save()){
                  return redirect()->back()->with("success", "Fail to add banner details try again");
@@ -126,7 +126,7 @@ class BannerController extends Controller
             ,'UpdateBy' => auth()->user()->id
          ];
 
-        $propertiesudpate = properties::where('PropertyId', $id)->update($updateDetails);
+        $propertiesudpate = propertydetails::where('PropertyId', $id)->update($updateDetails);
 
         $updateBanner = [
             'CurrentStatus' => 'InActive'

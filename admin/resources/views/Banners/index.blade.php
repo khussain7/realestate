@@ -28,7 +28,6 @@
                 <table class="table table-striped table-hover" id="list">
                         <thead>
                             <tr>
-                            <td>Name</td>
                             <td>Referance Number</td>
                             <td>Price</td>
                             <td>Area(SqFt)</td>
@@ -41,7 +40,6 @@
                     <tbody>
                     @foreach($bannerdetailslist as $pdata)
                     <tr>
-                        <td>{{ $pdata['PropertyName'] }}</td>
                         <td>{{ $pdata['ReferanceNumber'] }}</td>
                         <td>
                             @php 

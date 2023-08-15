@@ -40,6 +40,7 @@ class propertydetails extends Model
         'CreateOn',
         'UpdateBy',
         'UpdatedOn',
-        'CurrentStatus'
+        'CurrentStatus',
+        'AddedAsBanner'
     ];
 }
