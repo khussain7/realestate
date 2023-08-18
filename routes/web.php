@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertydetailsController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,6 @@ use App\Http\Controllers\PropertydetailsController;
 Route::get('/', ([App\Http\Controllers\PropertydetailsController::class, 'index']));
 
 Route::get('/propertiesview/{id}',[PropertydetailsController::class,'property'])->name('property');
+Route::get('/employees',[EmployeeController::class,'index'])->name('employees');
+Route::get('/aboutus',[EmployeeController::class,'aboutus'])->name('aboutus');
 
