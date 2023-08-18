@@ -183,30 +183,30 @@
                 <div class="property-item col-lg-4 col-md-6 col-12 mb-40">
                     <div class="property-inner">
                         <div class="image">
-                            <a href="{{ url('/propertiesview/'.$pdata['PropertyId']) }}">
-                                <img src="" class="d-block w-100 img-view"  alt="">
+                            <a href="{{ url('/propertiesview/'.$pdata->PropertyId) }}">
+                                <img src="{{ asset('../admin/public/files/'.$pdata->ImageName) }}" class="d-block w-100 img-view"  alt="{{ $pdata->ReferanceNumber }}">
                             </a>
                             <ul class="property-feature">
                                 <li>
-                                    <span class="area"><img src="{{ asset('build/template/images/icons/area.png') }}" alt="">{{ $pdata['Area'] }} SqFt</span>
+                                    <span class="area"><img src="{{ asset('build/template/images/icons/area.png') }}" alt="">{{ $pdata->Area }} SqFt</span>
                                 </li>
                                 <li>
-                                    <span class="bed"><img src="{{ asset('build/template/images/icons/bed.png') }}" alt="">{{ $pdata['Bedroorms'] }}</span>
+                                    <span class="bed"><img src="{{ asset('build/template/images/icons/bed.png') }}" alt="">{{ $pdata->Bedroorms }}</span>
                                 </li>
                                 <li>
-                                    <span class="bath"><img src="{{ asset('build/template/images/icons/bath.png') }}" alt="">{{ $pdata['Bathrooms'] }}</span>
+                                    <span class="bath"><img src="{{ asset('build/template/images/icons/bath.png') }}" alt="">{{ $pdata->Bathrooms }}</span>
                                 </li>
                             </ul>
                         </div>
                         <div class="content">
                             <div class="left">
-                                <h3 class="title"><a href="single-properties.html">{{ $pdata['ReferanceNumber '] }}</a></h3>
-                                <span class="location"><img src="{{ asset('build/template/images/icons/marker.png') }}" alt="">{{ $pdata['City'] }}</span>
+                                <h3 class="title"><a href="single-properties.html">{{ $pdata->ReferanceNumber }}</a></h3>
+                                <span class="location"><img src="{{ asset('build/template/images/icons/marker.png') }}" alt="">{{ $pdata->City }}</span>
                             </div>
                             <div class="right">
                                 <div class="type-wrap">
                                     <span class="price1">AED {{ $english_format_number }}</span>
-                                    <span class="type">{{ $pdata['Purpose'] }}</span>
+                                    <span class="type">{{ $pdata->Purpose }}</span>
                                 </div> 
                             </div>
                         </div>

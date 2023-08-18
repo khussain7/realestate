@@ -19,7 +19,16 @@ class PropertydetailsController extends Controller
     public function index()
     {
         //
-        $propertydetailslist = propertydetails::where('CurrentStatus', 'Active')->get();
+        // $propertydetailslist = propertydetails::where('CurrentStatus', 'Active')->get();
+
+        $propertydetailslist = DB::table('propertydetails')->select('propertydetails.PropertyId','propertydetails.Category', 'propertydetails.SubCategory',
+        'propertydetails.Purpose','propertydetails.Furnished','propertydetails.ReferanceNumber','propertydetails.City',
+        'propertydetails.Price','propertydetails.Area','propertydetails.PermitNumber','propertydetails.Bedroorms',
+        'propertydetails.Bathrooms','propertydetails.Rent','propertyimages.ImageName') 
+       ->join('propertyimages','propertydetails.PropertyId','=','propertyimages.PropertyId')
+       ->where('propertyimages.IsBannner','=','Yes')
+       ->get();
+
         // $propertyimages = propertyimages::where('CurrentStatus', 'Imageupload')->get();
         $bannerlist = DB::table('propertydetails')->select('propertydetails.PropertyId','propertydetails.Category', 'propertydetails.SubCategory',
                                  'propertydetails.Purpose','propertydetails.Furnished','propertydetails.ReferanceNumber','propertydetails.City',
