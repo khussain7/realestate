@@ -224,5 +224,6 @@
         <script src="{{ asset('build/template/js/plugins.js') }}"></script>
         <script src="{{ asset('build/template/js/map-place.js') }}"></script>
         <script src="{{ asset('build/template/js/main.js') }}"></script>
+        
     </body>
 </html>

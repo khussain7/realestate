@@ -17,9 +17,9 @@
                            <!--Hero Content start-->
                            <div class="hero-property-content text-center">
 
-                               <h1 class="title">
-                                    {{ $bdata->Category }}
-                                </h1>
+                               <div class="title">
+                                    {{ $bdata->CategoryName }} - {{ $bdata->SubCategoryName }}
+                                </div>
                                <span class="location"><img src="assets/images/icons/hero-marker.png" alt=""> {{ $bdata->City }}</span>
                                <div class="type-wrap">
                                    <span class="type">AED</span>
