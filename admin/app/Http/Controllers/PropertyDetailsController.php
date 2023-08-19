@@ -88,7 +88,11 @@ class PropertyDetailsController extends Controller
                  return redirect()->back()->with("success", "Fail to add new property details try again");
               }
 
+              $randomgeneratorsave = new randomgenerator;
+              $randomgeneratorsave->active = "y"; $randomgeneratorsave->save();
+              
             $propertiesdata =  propertydetails::select('PropertyId')->where('ReferanceNumber', $request->ReferanceNumber)->get();
+
              return Redirect::to('propertyr/amenities/'.$propertiesdata[0]['PropertyId'])->with(['success' => 'Success add property details. Add amenities to property']);
             //return redirect()->back()->with("success", "Success add property details do to list");
      }

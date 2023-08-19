@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\properties;
 use App\Models\owner;
+use App\Models\randomgenerator;
 
 class PropertydetailController extends Controller
 {
@@ -87,6 +88,8 @@ class PropertydetailController extends Controller
            return redirect()->back()->with("success", "Fail to add new property details try again");
         }
        
+        $randomgeneratorsave = new randomgenerator;
+        $randomgeneratorsave->active = "y"; $randomgeneratorsave->save();
        // Session::flash("message", "Success add property details do to list");
         return redirect()->back()->with("success", "Success add property details do to list");
         //return Redirect::route('property');

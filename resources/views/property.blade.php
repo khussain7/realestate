@@ -29,45 +29,33 @@
                                     </div>
                                     <div class="right">
                                         <div class="type-wrap">
-                                            <span class="price"> AED {{ $price_format_number}} <span></span></span>
+                                            <span class="price"> AED {{ $price_format_number}} </span>
                                             <span class="type"> {{ $propertydetails[0]["Purpose"]}} </span>
                                         </div>
                                     </div>
                                 </div>
                                 
+
                                 <div class="image mb-30">
-                                    <div class="single-property-gallery slick-initialized slick-slider">
-                                        <div class="slick-list draggable">
-                                            <div class="slick-track" style="opacity: 1; width: 6984px; transform: translate3d(-776px, 0px, 0px);">
-                                           <div class="item slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="0" style="width: 776px;">
-                                            <img src="{{ asset('../admin/public/files/'.$BannerImage[0]['ImageName']) }}"  alt="{{ $BannerImage[0]['ImageName'] }}">
-                                            </div>
-                                           
-                                            @foreach($propertyImages as $pimg)
-                                            <div class="item slick-slide" data-slick-index="{{$i}}" aria-hidden="false" tabindex="0" style="width: 776px;">
-                                                <img src="{{ asset('../admin/public/files/'.$pimg['ImageName']) }}"  alt="{{ $pimg['ImageName'] }}">
-                                            </div>
-                                            @php ($i++)
-                                            @endforeach
-                                           
-                                          
-                                        </div>
+                                    <div class="single-property-gallery">
+                                        <div class="item"><img src="{{ asset('../admin/public/files/'.$BannerImage[0]['ImageName']) }}" alt="{{ $BannerImage[0]['ImageName'] }}"></div>
+                                    @foreach($propertyImages as $pimg)
+                                        <img src="{{ asset('../admin/public/files/'.$pimg['ImageName']) }}"  alt="{{ $pimg['ImageName'] }}">
+                                         @php ($i++)
+                                    @endforeach 
                                     </div>
-                                </div>
-                                    <div class="single-property-thumb slick-initialized slick-slider">
-                                        <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 796px; transform: translate3d(0px, 0px, 0px);">
-
-                                            @foreach($propertyImages as $pimg)
-                                            <div class="item slick-slide slick-current slick-active" data-slick-index="{{$j}}" aria-hidden="false" tabindex="0" style="width: 199px;">
-                                                <img src="{{ asset('../admin/public/files/'.$pimg['ImageName']) }}"  alt="{{ $pimg['ImageName'] }}">
-                                            </div>
-                                            @php ($j++)
-                                            @endforeach
+                                    <div class="single-property-thumb">
+                                    @foreach($propertyImages as $pimg)
+                                        <div class="item">
+                                        <img src="{{ asset('../admin/public/files/'.$pimg['ImageName']) }}"  alt="{{ $pimg['ImageName'] }}">
                                         </div>
-                                    </div>    
-                                </div>
-                            </div>
+										@php ($j++)
+                                            @endforeach
+                                    </div>
+                                </div>          
 
+
+ 
                                 
                                 
                                 <div class="content">
