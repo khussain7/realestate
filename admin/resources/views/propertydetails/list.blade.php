@@ -83,18 +83,27 @@
             } );
 
             function viewproperty(pid, actiontaken){
-              let message = (actiontaken === 'delete') ? "Are you sure you want to delete proprety" : "Are you sure you want to view proprety details";
-              if (confirm(message)) {
-                  //If user say 'yes' to confirm
-                  document.getElementById("PropertyId").value = pid;
-                  document.getElementById("ActionTaken").value = actiontaken;
-                  let postaction = document.getElementById("postaction");
-                  postaction.submit();
-                } else {
-                   return false;
-                }
-                
-             
+              if(actiontaken == 'delete')
+              {
+                let message = "Are you sure you want to delete proprety";
+                if (confirm(message)) {
+                    //If user say 'yes' to confirm
+                    document.getElementById("PropertyId").value = pid;
+                    document.getElementById("ActionTaken").value = actiontaken;
+                    let postaction = document.getElementById("postaction");
+                    //return false;
+                    postaction.submit();
+                  } else {
+                    return false;
+                  }
+              }
+              else
+              {
+                    document.getElementById("PropertyId").value = pid;
+                    document.getElementById("ActionTaken").value = actiontaken;
+                    let postaction = document.getElementById("postaction");
+                    postaction.submit();
+              }
             }
 	</script>
 @endpush

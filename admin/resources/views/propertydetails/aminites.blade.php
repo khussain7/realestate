@@ -1,6 +1,9 @@
 @extends('layouts.header')
 @section('title', 'Add Amenities')
 @section('content')
+@php
+  $setvalue = 0; $setcheck = '';
+@endphp
 <style>
     body {
         line-height: unset;
@@ -32,180 +35,597 @@
                 <div class="row row-100">
                     <div id="form-div">
                         <div class="">
+
+              <form id="postaction" method="POST" action="{{ url('/propertyr/actionpage') }}" enctype="multipart/form-data" class="form-inline">
+                  @csrf
+                    <input type="hidden" id="PropertyId" name="PropertyId" value="{{$id}}" />
+                    <input type="hidden" id="ActionTaken" name="ActionTaken" value="view" />
+              </form>
                             
-                           
             <form method="POST" action="{{ url('/propertyr/amenities') }}" enctype="multipart/form-data" class="form-inline">
                @csrf
+               <div class="row">
+                <div class="col-sm-12 col-support-3">
+                  @if($insertorupdate == "update")
+                     <h4>
+                        <input type="checkbox" class="form-check-input" id="CheckUpdate" onclick="setcheckbox2('CheckUpdate')" name="CheckUpdate" value="0" 
+                                 {{ old('CheckUpdate') == '1' ? 'checked="checked"' : '' }} />
+                        <label for="" class="form-labelcheckbox">
+                                 Click on check-box to activate update button!
+                        </label>
+                     </h4>
+                  @endif
+                
+                </div>
+              </div> 
+
             <div class="row g-3"> 
             <div class="col-sm-3 col-support-3">
-            <input type="hidden" id="PropertyId" name="PropertyId" value="{{$id}}" />
+              <input type="hidden" id="PropertyId" name="PropertyId" value="{{$id}}" />
+                  <input type="hidden" id="insertorupdate" name="insertorupdate" value="{{$insertorupdate}}" />
             @if ($errors->has('PropertyId'))
                 <span class="text-danger">{{  $errors->first('PropertyId') }}</span>
             @endif
-              <input type="checkbox" class="form-check-input" id="BarbequeArea" onclick="setcheckbox('BarbequeArea')" name="BarbequeArea" value="0" {{ old('BarbequeArea') == '1' ? 'checked="checked"' : '' }} />
+              @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('BarbequeArea') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} else {$setvalue = 0; $setcheck = '';}
+               }
+               else
+               {
+                  if($propertyamenities->BarbequeArea == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+                  else if(old('BarbequeArea') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;} 
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+              @endphp
+              <input type="checkbox" class="form-check-input" id="BarbequeArea" onclick="setcheckbox('BarbequeArea')" name="BarbequeArea" value="{{$setvalue}}"  {{$setcheck}} />
               <label for="BarbequeAreaFor" class="form-labelcheckbox">Barbeque Area</label>
             </div>
            
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="DayCareCenter" name="DayCareCenter" onclick="setcheckbox('DayCareCenter')"  value="0" {{ old('DayCareCenter') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('DayCareCenter') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->DayCareCenter == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('DayCareCenter') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="DayCareCenter" name="DayCareCenter" onclick="setcheckbox('DayCareCenter')"  value="{{$setvalue}}"  {{$setcheck}}/>  
             <label for="DayCareCenterFor" class="form-labelcheckbox">Day Care Center</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="KidsPlayArea" name="KidsPlayArea" onclick="setcheckbox('KidsPlayArea')" value="0" {{ old('KidsPlayArea') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('KidsPlayAreaFor') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->KidsPlayAreaFor == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('KidsPlayAreaFor') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="KidsPlayArea" name="KidsPlayArea" onclick="setcheckbox('KidsPlayArea')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="KidsPlayAreaFor" class="form-labelcheckbox">Kids Play Area</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="LawnOrGarden" name="LawnOrGarden" onclick="setcheckbox('LawnOrGarden')" value="0" {{ old('LawnOrGarden') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('LawnOrGardenFor') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->LawnOrGarden == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('LawnOrGarden') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="LawnOrGarden" name="LawnOrGarden" onclick="setcheckbox('LawnOrGarden')" value="0" value="{{$setvalue}}"  {{$setcheck}}  />  
             <label for="LawnOrGardenFor" class="form-labelcheckbox">Lawn Or Garden</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="CafeteriaOrCanteen" name="CafeteriaOrCanteen" onclick="setcheckbox('CafeteriaOrCanteen')" value="0" {{ old('CafeteriaOrCanteen') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('CafeteriaOrCanteen') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->CafeteriaOrCanteen == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('CafeteriaOrCanteen') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="CafeteriaOrCanteen" name="CafeteriaOrCanteen" onclick="setcheckbox('CafeteriaOrCanteen')" value="{{$setvalue}}"  {{$setcheck}}  />  
             <label for="CafeteriaOrCanteenFor" class="form-labelcheckbox">Cafeteria Or Canteen</label>
             </div>
 
             
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="GymOrHealthClub" name="GymOrHealthClub" onclick="setcheckbox('GymOrHealthClub')" value="0" {{ old('GymOrHealthClub') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('GymOrHealthClub') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->GymOrHealthClub == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('GymOrHealthClub') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="GymOrHealthClub" name="GymOrHealthClub" onclick="setcheckbox('GymOrHealthClub')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="GymOrHealthClubFor" class="form-labelcheckbox">Gym Or HealthClub</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="Jacuzzi" name="Jacuzzi" onclick="setcheckbox('Jacuzzi')" value="0" {{ old('Jacuzzi') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('JacuzziFor') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->JacuzziFor == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('JacuzziFor') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="Jacuzzi" name="Jacuzzi" onclick="setcheckbox('Jacuzzi')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="JacuzziFor" class="form-labelcheckbox">Jacuzzi</label>
             </div>
             
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="Sauna" name="Sauna" onclick="setcheckbox('Sauna')" value="0" {{ old('Sauna') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('JacuzziFor') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->JacuzziFor == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('JacuzziFor') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="Sauna" name="Sauna" onclick="setcheckbox('Sauna')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="SaunaFor" class="form-labelcheckbox">Sauna</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="SteamRoom" name="SteamRoom" onclick="setcheckbox('SteamRoom')" value="0" {{ old('SteamRoom') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('SteamRoom') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->SteamRoom == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('SteamRoom') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="SteamRoom" name="SteamRoom" onclick="setcheckbox('SteamRoom')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="SteamRoomFor" class="form-labelcheckbox">Steam Room</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="SwimmingPool" name="SwimmingPool" onclick="setcheckbox('SwimmingPool')" value="0" {{ old('SwimmingPool') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('SwimmingPool') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->SwimmingPool == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('SwimmingPool') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="SwimmingPool" name="SwimmingPool" onclick="setcheckbox('SwimmingPool')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="SwimmingPoolFor" class="form-labelcheckbox">Swimming Pool</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="FacilitiesForDisabled" name="FacilitiesForDisabled" onclick="setcheckbox('FacilitiesForDisabled')" value="0" {{ old('FacilitiesForDisabled') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('FacilitiesForDisabled') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->FacilitiesForDisabled == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('FacilitiesForDisabled') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="FacilitiesForDisabled" name="FacilitiesForDisabled" onclick="setcheckbox('FacilitiesForDisabled')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="FacilitiesForDisabledFor" class="form-labelcheckbox">Facilities For Disabled</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="LaundryRoom" name="LaundryRoom" onclick="setcheckbox('LaundryRoom')" value="0" {{ old('LaundryRoom') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('LaundryRoom') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->LaundryRoom == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('LaundryRoom') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="LaundryRoom" name="LaundryRoom" onclick="setcheckbox('LaundryRoom')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="LaundryRoomFor" class="form-labelcheckbox">Laundry Room</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="LaundryFacility" name="LaundryFacility" onclick="setcheckbox('LaundryFacility')" value="0" {{ old('LaundryFacility') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('LaundryFacility') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->LaundryFacility == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('LaundryFacility') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="LaundryFacility" name="LaundryFacility" onclick="setcheckbox('LaundryFacility')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="LaundryFacilityFor" class="form-labelcheckbox">Laundry Facility</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="SharedKitchen" name="SharedKitchen" onclick="setcheckbox('SharedKitchen')" value="0" {{ old('SharedKitchen') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('SharedKitchen') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->SharedKitchen == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('SharedKitchen') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="SharedKitchen" name="SharedKitchen" onclick="setcheckbox('SharedKitchen')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="SharedKitchenFor" class="form-labelcheckbox">Shared Kitchen</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="BalconyOrTerrace" name="BalconyOrTerrace" onclick="setcheckbox('BalconyOrTerrace')" value="0" {{ old('BalconyOrTerrace') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('BalconyOrTerrace') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->BalconyOrTerrace == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('BalconyOrTerrace') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="BalconyOrTerrace" name="BalconyOrTerrace" onclick="setcheckbox('BalconyOrTerrace')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="BalconyOrTerraceFor" class="form-labelcheckbox">Balcony Or Terrace</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="LobbyInBuilding" name="LobbyInBuilding" onclick="setcheckbox('LobbyInBuilding')" value="0" {{ old('LobbyInBuilding') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('LobbyInBuilding') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->LobbyInBuilding == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('LobbyInBuilding') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="LobbyInBuilding" name="LobbyInBuilding" onclick="setcheckbox('LobbyInBuilding')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="LobbyInBuildingFor" class="form-labelcheckbox">Lobby In Building</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="PrayerRoom" name="PrayerRoom" onclick="setcheckbox('PrayerRoom')" value="0" {{ old('PrayerRoom') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('PrayerRoom') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->PrayerRoom == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('PrayerRoom') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="PrayerRoom" name="PrayerRoom" onclick="setcheckbox('PrayerRoom')"value="{{$setvalue}}"  {{$setcheck}}/>  
             <label for="PrayerRoomFor" class="form-labelcheckbox">Prayer Room</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="ReceptionOrWaitingRoom" name="ReceptionOrWaitingRoom" onclick="setcheckbox('ReceptionOrWaitingRoom')" value="0" {{ old('ReceptionOrWaitingRoom') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('ReceptionOrWaitingRoom') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->ReceptionOrWaitingRoom == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('ReceptionOrWaitingRoom') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="ReceptionOrWaitingRoom" name="ReceptionOrWaitingRoom" onclick="setcheckbox('ReceptionOrWaitingRoom')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="ReceptionOrWaitingRoomFor" class="form-labelcheckbox">Reception Or Waiting Room</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="BusinessCenter" name="BusinessCenter" onclick="setcheckbox('BusinessCenter')" value="0" {{ old('BusinessCenter') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('BusinessCenter') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->BusinessCenter == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('BusinessCenter') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="BusinessCenter" name="BusinessCenter" onclick="setcheckbox('BusinessCenter')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="BusinessCenterFor" class="form-labelcheckbox">Business Center</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="CCTVSecurity" name="CCTVSecurity" onclick="setcheckbox('CCTVSecurity')" value="0" {{ old('CCTVSecurity') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('CCTVSecurity') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->CCTVSecurity == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('CCTVSecurity') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="CCTVSecurity" name="CCTVSecurity" onclick="setcheckbox('CCTVSecurity')" value="0" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="CCTVSecurityFor" class="form-labelcheckbox">CCTV Security</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="ATMFacility" name="ATMFacility" onclick="setcheckbox('ATMFacility')" value="0" {{ old('ATMFacility') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('ATMFacility') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->ATMFacility == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('ATMFacility') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="ATMFacility" name="ATMFacility" onclick="setcheckbox('ATMFacility')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="ATMFacilityFor" class="form-labelcheckbox">ATM Facility</label>
             </div>
 
             
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="Freehold" name="Freehold" onclick="setcheckbox('Freehold')" value="0" {{ old('Freehold') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('Freehold') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->Freehold == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('Freehold') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="Freehold" name="Freehold" onclick="setcheckbox('Freehold')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="FreeholdFor" class="form-labelcheckbox">Freehold</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="BroadbandInternet" name="BroadbandInternet" onclick="setcheckbox('BroadbandInternet')" value="0" {{ old('BroadbandInternet') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('BroadbandInternet') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->BroadbandInternet == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('BroadbandInternet') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="BroadbandInternet" name="BroadbandInternet" onclick="setcheckbox('BroadbandInternet')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="BroadbandInternetFor" class="form-labelcheckbox">Broadband Internet</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="SatelliteCableTV" name="SatelliteCableTV" onclick="setcheckbox('SatelliteCableTV')" value="0" {{ old('SatelliteCableTV') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('SatelliteCableTV') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->SatelliteCableTV == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('SatelliteCableTV') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="SatelliteCableTV" name="SatelliteCableTV" onclick="setcheckbox('SatelliteCableTV')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="SatelliteCableTVFor" class="form-labelcheckbox">Satellite Cable TV</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="Intercom" name="Intercom" onclick="setcheckbox('Intercom')" value="0" {{ old('Intercom') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('Intercom') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->Intercom == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('Intercom') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="Intercom" name="Intercom" onclick="setcheckbox('Intercom')"value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="IntercomFor" class="form-labelcheckbox">Intercom</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="DoubleGlazedWindows" name="DoubleGlazedWindows" onclick="setcheckbox('DoubleGlazedWindows')" value="0" {{ old('DoubleGlazedWindows') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('DoubleGlazedWindows') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->DoubleGlazedWindows == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('DoubleGlazedWindows') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="DoubleGlazedWindows" name="DoubleGlazedWindows" onclick="setcheckbox('DoubleGlazedWindows')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="DoubleGlazedWindowsFor" class="form-labelcheckbox">Double Glazed Windows</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="CentrallyAirConditioned" name="CentrallyAirConditioned" onclick="setcheckbox('CentrallyAirConditioned')" value="0" {{ old('CentrallyAirConditioned') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('CentrallyAirConditioned') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->CentrallyAirConditioned == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('CentrallyAirConditioned') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="CentrallyAirConditioned" name="CentrallyAirConditioned" onclick="setcheckbox('CentrallyAirConditioned')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="CentrallyAirConditionedFor" class="form-labelcheckbox">Centrally Air Conditioned</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="CentralHeating" name="CentralHeating" onclick="setcheckbox('CentralHeating')" value="0" {{ old('CentralHeating') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('CentralHeating') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->CentralHeating == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('CentralHeating') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="CentralHeating" name="CentralHeating" onclick="setcheckbox('CentralHeating')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="CentralHeatingFor" class="form-labelcheckbox">Central Heating</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="StudyRoom" name="StudyRoom" onclick="setcheckbox('StudyRoom')" value="0" {{ old('StudyRoom') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('StudyRoom') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->StudyRoom == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('StudyRoom') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="StudyRoom" name="StudyRoom" onclick="setcheckbox('StudyRoom')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="StudyRoomFor" class="form-labelcheckbox">Study Room</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="WasteDisposal" name="WasteDisposal" onclick="setcheckbox('WasteDisposal')" value="0" {{ old('WasteDisposal') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('WasteDisposal') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->WasteDisposal == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('WasteDisposal') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="WasteDisposal" name="WasteDisposal" onclick="setcheckbox('WasteDisposal')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="WasteDisposalFor" class="form-labelcheckbox">Waste Disposal</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
-            <input type="checkbox" class="form-check-input" id="CleaningServices" name="CleaningServices" onclick="setcheckbox('CleaningServices')" value="0" {{ old('CleaningServices') == '1' ? 'checked="checked"' : '' }} />  
+            @php  
+              if($insertorupdate == "insert")
+               { 
+                  if(old('CleaningServices') == '1') {$setvalue = 1; $setcheck = 'checked=checked';} 
+               }
+               else
+               {
+                  if($propertyamenities->CleaningServices == '1') {$setvalue = 1; $setcheck = 'checked=checked';}
+                  else if(old('CleaningServices') == '1') { $setcheck = 'checked=checked'; $setvalue = 1;}
+                  else {$setvalue = 0; $setcheck = '';}
+               }
+            @endphp
+            <input type="checkbox" class="form-check-input" id="CleaningServices" name="CleaningServices" onclick="setcheckbox('CleaningServices')" value="{{$setvalue}}"  {{$setcheck}} />  
             <label for="CleaningServicesFor" class="form-labelcheckbox">Cleaning Services</label>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('View') != null) {$setvalue = old('View');} 
+               }
+               else
+               {
+                  if($propertyamenities->View != null) {$setvalue = $propertyamenities->View; }
+                  else if(old('View') != null) {$setvalue = old('View');}
+               }
+            @endphp
             <label for="ViewFor" class="form-label">View</label>
-            <input type="text" id="View" class="form-control" name="View" value="{{ old('View') }}"/>
+            <input type="text" id="View" class="form-control" name="View" value="{{$setvalue}}"/>
             </div>
             
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('CompletionYear') != null) {$setvalue = old('CompletionYear');} 
+               }
+               else
+               {
+                  if($propertyamenities->CompletionYear != null) {$setvalue = $propertyamenities->CompletionYear; }
+                  else if(old('CompletionYear') != null) {$setvalue = old('CompletionYear');}
+               }
+            @endphp
             <label for="CompletionYearFor" class="form-label">Completion Year</label>
-            <input type="text" id="CompletionYear" class="form-control" name="CompletionYear" value="{{ old('CompletionYear') }}"/>
+            <input type="text" id="CompletionYear" class="form-control" name="CompletionYear" value="{{$setvalue}}"/>
             </div>
             
             <div class="col-sm-3 col-support-3">
@@ -219,70 +639,226 @@
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('Floor') != null) {$setvalue = old('Floor');} 
+               }
+               else
+               {
+                  if($propertyamenities->Floor != null) {$setvalue = $propertyamenities->Floor; }
+                  else if(old('Floor') != null) {$setvalue = old('Floor');}
+               }
+            @endphp
             <label for="FloorFor" class="form-label">Number of Floors</label>
-            <input type="number" id="Floor" class="form-control" name="Floor" value="{{ old('Floor') }}"/>
+            <input type="number" id="Floor" class="form-control" name="Floor" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('ElevatorsInBuildingFor') != null) {$setvalue = old('ElevatorsInBuildingFor');} 
+               }
+               else
+               {
+                  if($propertyamenities->ElevatorsInBuildingFor != null) {$setvalue = $propertyamenities->ElevatorsInBuildingFor; }
+                  else if(old('ElevatorsInBuildingFor') != null) {$setvalue = old('ElevatorsInBuildingFor');}
+               }
+            @endphp
             <label for="ElevatorsInBuildingFor" class="form-label">Number Of Elevators in a Building</label>
-            <input type="number" id="ElevatorsInBuilding" class="form-control" name="ElevatorsInBuilding" value="{{ old('ElevatorsInBuilding') }}"/>
+            <input type="number" id="ElevatorsInBuilding" class="form-control" name="ElevatorsInBuilding" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('ElevatorsInBuildingFor') != null) {$setvalue = old('ElevatorsInBuildingFor');} 
+               }
+               else
+               {
+                  if($propertyamenities->ElevatorsInBuildingFor != null) {$setvalue = $propertyamenities->ElevatorsInBuildingFor; }
+                  else if(old('ElevatorsInBuildingFor') != null) {$setvalue = old('ElevatorsInBuildingFor');}
+               }
+            @endphp
             <label for="SecurityStaffFor" class="form-label">Number Of Security Staff</label>
-            <input type="number" id="SecurityStaff" class="form-control" name="SecurityStaff" value="{{ old('SecurityStaff') }}"/>
+            <input type="number" id="SecurityStaff" class="form-control" name="SecurityStaff" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('OtherMainFeatures') != null) {$setvalue = old('OtherMainFeatures');} 
+               }
+               else
+               {
+                  if($propertyamenities->OtherMainFeatures != null) {$setvalue = $propertyamenities->OtherMainFeatures; }
+                  else if(old('OtherMainFeatures') != null) {$setvalue = old('OtherMainFeatures');}
+               }
+            @endphp
             <label for="OtherMainFeaturesFor" class="form-label">Other Main Features</label>
-            <input type="number" id="OtherMainFeatures" class="form-control" name="OtherMainFeatures" value="{{ old('OtherMainFeatures') }}"/>
+            <input type="number" id="OtherMainFeatures" class="form-control" name="OtherMainFeatures" value="{{$setvalue}}"/>
             </div>
 
 
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('PetPolicy') != null) {$setvalue = old('PetPolicy');} 
+               }
+               else
+               {
+                  if($propertyamenities->PetPolicy != null) {$setvalue = $propertyamenities->PetPolicy; }
+                  else if(old('PetPolicy') != null) {$setvalue = old('PetPolicy');}
+               }
+            @endphp
             <label for="PetPolicyFor" class="form-label">PetPolicy</label>
-            <input type="text" id="PetPolicy" class="form-control" name="PetPolicy" value="{{ old('PetPolicy') }}"/>
+            <input type="text" id="PetPolicy" class="form-control" name="PetPolicy" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('LandArea') != null) {$setvalue = old('LandArea');} 
+               }
+               else
+               {
+                  if($propertyamenities->LandArea != null) {$setvalue = $propertyamenities->LandArea; }
+                  else if(old('LandArea') != null) {$setvalue = old('LandArea');}
+               }
+            @endphp
             <label for="LandAreaFor" class="form-label">Land Area</label>
-            <input type="number" id="LandArea" class="form-control" name="LandArea" value="{{ old('LandArea') }}"/>
+            <input type="number" id="LandArea" class="form-control" name="LandArea" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('NearbySchools') != null) {$setvalue = old('NearbySchools');} 
+               }
+               else
+               {
+                  if($propertyamenities->NearbySchools != null) {$setvalue = $propertyamenities->NearbySchools; }
+                  else if(old('NearbySchools') != null) {$setvalue = old('NearbySchools');}
+               }
+            @endphp
             <label for="NearbySchoolsFor" class="form-label">Near By Schools</label>
-            <input type="text" id="NearbySchools" class="form-control" name="NearbySchools" value="{{ old('NearbySchools') }}"/>
+            <input type="text" id="NearbySchools" class="form-control" name="NearbySchools" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('NearbyHospitals') != null) {$setvalue = old('NearbyHospitals');} 
+               }
+               else
+               {
+                  if($propertyamenities->NearbyHospitals != null) {$setvalue = $propertyamenities->NearbyHospitals; }
+                  else if(old('NearbyHospitals') != null) {$setvalue = old('NearbyHospitals');}
+               }
+            @endphp
             <label for="NearbyHospitalsFor" class="form-label">Near By Hospitals</label>
-            <input type="text" id="NearbyHospitals" class="form-control" name="NearbyHospitals" value="{{ old('NearbyHospitals') }}"/>
+            <input type="text" id="NearbyHospitals" class="form-control" name="NearbyHospitals" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('NearbyShoppingMalls') != null) {$setvalue = old('NearbyShoppingMalls');} 
+               }
+               else
+               {
+                  if($propertyamenities->NearbyShoppingMalls != null) {$setvalue = $propertyamenities->NearbyShoppingMalls; }
+                  else if(old('NearbyShoppingMalls') != null) {$setvalue = old('NearbyShoppingMalls');}
+               }
+            @endphp
             <label for="NearbyShoppingMallsFor" class="form-label">Near By Shopping Malls</label>
-            <input type="text" id="NearbyShoppingMalls" class="form-control" name="NearbyShoppingMalls" value="{{ old('NearbyShoppingMalls') }}"/>
+            <input type="text" id="NearbyShoppingMalls" class="form-control" name="NearbyShoppingMalls" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('DistanceFromAirportFor') != null) {$setvalue = old('DistanceFromAirportFor');} 
+               }
+               else
+               {
+                  if($propertyamenities->DistanceFromAirportFor != null) {$setvalue = $propertyamenities->DistanceFromAirportFor; }
+                  else if(old('DistanceFromAirportFor') != null) {$setvalue = old('DistanceFromAirportFor');}
+               }
+            @endphp
             <label for="DistanceFromAirportFor" class="form-label">Distance From Airport</label>
-            <input type="number" id="DistanceFromAirportFor" class="form-control" name="DistanceFromAirportFor" value="{{ old('DistanceFromAirportFor') }}"/>
+            <input type="number" id="DistanceFromAirportFor" class="form-control" name="DistanceFromAirportFor" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('NearbyPublicTransport') != null) {$setvalue = old('NearbyPublicTransport');} 
+               }
+               else
+               {
+                  if($propertyamenities->NearbyPublicTransport != null) {$setvalue = $propertyamenities->NearbyPublicTransport; }
+                  else if(old('NearbyPublicTransport') != null) {$setvalue = old('NearbyPublicTransport');}
+               }
+            @endphp
             <label for="NearbyPublicTransportFor" class="form-label">Distance From Public Transport</label>
-            <input type="number" id="NearbyPublicTransport" class="form-control" name="NearbyPublicTransport" value="{{ old('NearbyPublicTransport') }}"/>
+            <input type="number" id="NearbyPublicTransport" class="form-control" name="NearbyPublicTransport" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('OtherNearbyPlaces') != null) {$setvalue = old('OtherNearbyPlaces');} 
+               }
+               else
+               {
+                  if($propertyamenities->OtherNearbyPlaces != null) {$setvalue = $propertyamenities->OtherNearbyPlaces; }
+                  else if(old('OtherNearbyPlaces') != null) {$setvalue = old('OtherNearbyPlaces');}
+               }
+            @endphp
             <label for="OtherNearbyPlacesFor" class="form-label">Other Nearby Places</label>
-            <input type="text" id="OtherNearbyPlaces" class="form-control" name="OtherNearbyPlaces" value="{{ old('OtherNearbyPlaces') }}"/>
+            <input type="text" id="OtherNearbyPlaces" class="form-control" name="OtherNearbyPlaces" value="{{$setvalue}}"/>
             </div>
 
             <div class="col-sm-3 col-support-3">
+            @php  
+               $setvalue = "";
+              if($insertorupdate == "insert")
+               { 
+                  if(old('Features') != null) {$setvalue = old('Features');} 
+               }
+               else
+               {
+                  if($propertyamenities->Features != null) {$setvalue = $propertyamenities->Features; }
+                  else if(old('Features') != null) {$setvalue = old('Features');}
+               }
+            @endphp
             <label for="FeaturesFor" class="form-label">Other Features</label>
-            <input type="text" id="Features" class="form-control" name="Features" value="{{ old('Features') }}"/>
+            <input type="text" id="Features" class="form-control" name="Features" value="{{$setvalue}}"/>
             </div>
             
             <div class="col-sm-3 col-support-3">
@@ -352,10 +928,18 @@
                 <option value="10+" {{ old('ParkingSpaces') == '10+' ? 'selected="selected"' : '' }}>10+</option>
               </select>
             </div>
-
-          <div class="col-sm-12 col-support-3" style="margin-top:10px; padding-bottom:2%;">
-            <button class="btn">Save</button>
-          </div>
+             
+            @if($insertorupdate == "update")
+                  <div class="col-sm-12" style="margin:10px;">
+                     <span class="btn" id="propertydetails" onclick="backtopropertypage()"> << Property Details </span> 
+                     <button class="btn btn-danger" id="updatebtn" disabled="true">Update Aminites</button> 
+                     <a href="{{ url('/propertyr/uploadimages/'.$propertyamenities->PropertyId)}}" class="btn" id="amenitiesbtn"> Images >>  </a>
+                  </div>
+               @else
+               <div class="col-sm-3" style="margin:10px 50px;">
+                  <button class="btn">Save</button> 
+               </div>
+            @endif         
                         </form>
                         </div>
                     </div>
@@ -375,5 +959,16 @@
        (checkval === '0') ? document.getElementById(feildid).value = 1 : document.getElementById(feildid).value = 0;
 
        }
+       function backtopropertypage(){
+         let postaction = document.getElementById("postaction");
+             postaction.submit();
+       }
+       function setcheckbox2(feildid){
+          const checkval = document.getElementById(feildid).value;
+          const box = document.getElementById('updatebtn');
+          (checkval === '0') ? document.getElementById(feildid).value = 1 : document.getElementById(feildid).value = 0;
+          (checkval === '0') ? box.classList.remove = "btn-danger" : box.classList.add = "btn-danger";
+          (checkval === '0') ? box.disabled = false : box.disabled = true;
+        }
 	</script>
 @endpush

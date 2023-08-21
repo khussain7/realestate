@@ -98,7 +98,9 @@ class PropertyDetailsController extends Controller
      }
 
      public function addaminites($id){
-        return view('propertydetails.aminites',compact('id'));
+        $propertyamenities = propertyamenities::where('PropertyId', $id)->first();
+        $insertorupdate = ($propertyamenities == null) ? "insert" : "update";
+        return view('propertydetails.aminites',compact('id' , 'propertyamenities' , 'insertorupdate'));
      }
 
      public function saveaminites(Request $request){
@@ -108,84 +110,159 @@ class PropertyDetailsController extends Controller
             [
                 'PropertyId.required' => 'Property details are not selected from list!'
             ]);
-        $propertyamenitiescreate = new propertyamenities;
-        $propertyamenitiescreate->PropertyId = $request->PropertyId;
-        $propertyamenitiescreate->BarbequeArea = $request->BarbequeArea;
-        $propertyamenitiescreate->DayCareCenter = $request->DayCareCenter;
-        $propertyamenitiescreate->KidsPlayArea = $request->KidsPlayArea;
-        $propertyamenitiescreate->LawnOrGarden = $request->LawnOrGarden;
-        $propertyamenitiescreate->CafeteriaOrCanteen = $request->CafeteriaOrCanteen;
-        $propertyamenitiescreate->HealthAndFitness = $request->HealthAndFitness;
-        $propertyamenitiescreate->GymOrHealthClub = $request->GymOrHealthClub;
-        $propertyamenitiescreate->Jacuzzi = $request->Jacuzzi;
-        $propertyamenitiescreate->Sauna = $request->Sauna;
-        $propertyamenitiescreate->SteamRoom = $request->SteamRoom;
-        $propertyamenitiescreate->SwimmingPool = $request->SwimmingPool;
-        $propertyamenitiescreate->FacilitiesForDisabled = $request->FacilitiesForDisabled;
-        $propertyamenitiescreate->LaundryRoom = $request->LaundryRoom;
-        $propertyamenitiescreate->LaundryFacility = $request->LaundryFacility;
-        $propertyamenitiescreate->SharedKitchen = $request->SharedKitchen;
-        $propertyamenitiescreate->CompletionYear = $request->CompletionYear;
-        $propertyamenitiescreate->BalconyOrTerrace = $request->BalconyOrTerrace;
-        $propertyamenitiescreate->LobbyInBuilding = $request->LobbyInBuilding;
-        $propertyamenitiescreate->Flooring = $request->Flooring;
-        $propertyamenitiescreate->ElevatorsInBuilding = $request->ElevatorsInBuilding;
-        $propertyamenitiescreate->ServiceElevators = $request->ServiceElevators;
-        $propertyamenitiescreate->PrayerRoom = $request->PrayerRoom;
-        $propertyamenitiescreate->ReceptionOrWaitingRoom = $request->ReceptionOrWaitingRoom;
-        $propertyamenitiescreate->BusinessCenter = $request->BusinessCenter;
-        $propertyamenitiescreate->SecurityStaff = $request->SecurityStaff;
-        $propertyamenitiescreate->CCTVSecurity = $request->CCTVSecurity;
-        $propertyamenitiescreate->View = $request->View;
-        $propertyamenitiescreate->Floor = $request->Floor;
-        $propertyamenitiescreate->OtherMainFeatures = $request->OtherMainFeatures;
-        $propertyamenitiescreate->Freehold = $request->Freehold;
-        $propertyamenitiescreate->PetPolicy = $request->PetPolicy;
-        $propertyamenitiescreate->OtherRooms = $request->OtherRooms;
-        $propertyamenitiescreate->ATMFacility = $request->ATMFacility;
-        $propertyamenitiescreate->OtherFacilities = $request->OtherFacilities;
-        $propertyamenitiescreate->LandArea = $request->LandArea;
-        $propertyamenitiescreate->NumberOfBathrooms = $request->NumberOfBathrooms;
-        $propertyamenitiescreate->NumberOfBedrooms = $request->NumberOfBedrooms;
-        $propertyamenitiescreate->NearbySchools = $request->NearbySchools;
-        $propertyamenitiescreate->NearbyHospitals = $request->NearbyHospitals;
-        $propertyamenitiescreate->NearbyShoppingMalls = $request->NearbyShoppingMalls;
-        $propertyamenitiescreate->DistanceFromAirport = $request->DistanceFromAirport;
-        $propertyamenitiescreate->NearbyPublicTransport = $request->NearbyPublicTransport;
-        $propertyamenitiescreate->OtherNearbyPlaces = $request->OtherNearbyPlaces;
-        $propertyamenitiescreate->BroadbandInternet = $request->BroadbandInternet;
-        $propertyamenitiescreate->SatelliteCableTV = $request->SatelliteCableTV;
-        $propertyamenitiescreate->Intercom = $request->Intercom;
-        $propertyamenitiescreate->Features = $request->Features;
-        $propertyamenitiescreate->DoubleGlazedWindows = $request->DoubleGlazedWindows;
-        $propertyamenitiescreate->CentrallyAirConditioned = $request->CentrallyAirConditioned;
-        $propertyamenitiescreate->CentralHeating = $request->CentralHeating;
-        $propertyamenitiescreate->ElectricityBackup = $request->ElectricityBackup;
-        $propertyamenitiescreate->Furnished = $request->Furnished;
-        $propertyamenitiescreate->ParkingSpaces = $request->ParkingSpaces;
-        $propertyamenitiescreate->StorageAreas = $request->StorageAreas;
-        $propertyamenitiescreate->StudyRoom = $request->StudyRoom;
-        $propertyamenitiescreate->WasteDisposal = $request->WasteDisposal;
-        $propertyamenitiescreate->MaintenanceStaff = $request->MaintenanceStaff;
-        $propertyamenitiescreate->CleaningServices = $request->CleaningServices;
-        $propertyamenitiescreate->CreatedBy = auth()->user()->id;
-        $propertyamenitiescreate->CreateOn =  date('Y-m-d H:i:s');
-        $propertyamenitiescreate->CurrentStatus ="Imageupload";
+        if($request->insertorupdate == "insert")
+        {    
+            $propertyamenitiescreate = new propertyamenities;
+            $propertyamenitiescreate->PropertyId = $request->PropertyId;
+            $propertyamenitiescreate->BarbequeArea = $request->BarbequeArea;
+            $propertyamenitiescreate->DayCareCenter = $request->DayCareCenter;
+            $propertyamenitiescreate->KidsPlayArea = $request->KidsPlayArea;
+            $propertyamenitiescreate->LawnOrGarden = $request->LawnOrGarden;
+            $propertyamenitiescreate->CafeteriaOrCanteen = $request->CafeteriaOrCanteen;
+            $propertyamenitiescreate->HealthAndFitness = $request->HealthAndFitness;
+            $propertyamenitiescreate->GymOrHealthClub = $request->GymOrHealthClub;
+            $propertyamenitiescreate->Jacuzzi = $request->Jacuzzi;
+            $propertyamenitiescreate->Sauna = $request->Sauna;
+            $propertyamenitiescreate->SteamRoom = $request->SteamRoom;
+            $propertyamenitiescreate->SwimmingPool = $request->SwimmingPool;
+            $propertyamenitiescreate->FacilitiesForDisabled = $request->FacilitiesForDisabled;
+            $propertyamenitiescreate->LaundryRoom = $request->LaundryRoom;
+            $propertyamenitiescreate->LaundryFacility = $request->LaundryFacility;
+            $propertyamenitiescreate->SharedKitchen = $request->SharedKitchen;
+            $propertyamenitiescreate->CompletionYear = $request->CompletionYear;
+            $propertyamenitiescreate->BalconyOrTerrace = $request->BalconyOrTerrace;
+            $propertyamenitiescreate->LobbyInBuilding = $request->LobbyInBuilding;
+            $propertyamenitiescreate->Flooring = $request->Flooring;
+            $propertyamenitiescreate->ElevatorsInBuilding = $request->ElevatorsInBuilding;
+            $propertyamenitiescreate->ServiceElevators = $request->ServiceElevators;
+            $propertyamenitiescreate->PrayerRoom = $request->PrayerRoom;
+            $propertyamenitiescreate->ReceptionOrWaitingRoom = $request->ReceptionOrWaitingRoom;
+            $propertyamenitiescreate->BusinessCenter = $request->BusinessCenter;
+            $propertyamenitiescreate->SecurityStaff = $request->SecurityStaff;
+            $propertyamenitiescreate->CCTVSecurity = $request->CCTVSecurity;
+            $propertyamenitiescreate->View = $request->View;
+            $propertyamenitiescreate->Floor = $request->Floor;
+            $propertyamenitiescreate->OtherMainFeatures = $request->OtherMainFeatures;
+            $propertyamenitiescreate->Freehold = $request->Freehold;
+            $propertyamenitiescreate->PetPolicy = $request->PetPolicy;
+            $propertyamenitiescreate->OtherRooms = $request->OtherRooms;
+            $propertyamenitiescreate->ATMFacility = $request->ATMFacility;
+            $propertyamenitiescreate->OtherFacilities = $request->OtherFacilities;
+            $propertyamenitiescreate->LandArea = $request->LandArea;
+            $propertyamenitiescreate->NumberOfBathrooms = $request->NumberOfBathrooms;
+            $propertyamenitiescreate->NumberOfBedrooms = $request->NumberOfBedrooms;
+            $propertyamenitiescreate->NearbySchools = $request->NearbySchools;
+            $propertyamenitiescreate->NearbyHospitals = $request->NearbyHospitals;
+            $propertyamenitiescreate->NearbyShoppingMalls = $request->NearbyShoppingMalls;
+            $propertyamenitiescreate->DistanceFromAirport = $request->DistanceFromAirport;
+            $propertyamenitiescreate->NearbyPublicTransport = $request->NearbyPublicTransport;
+            $propertyamenitiescreate->OtherNearbyPlaces = $request->OtherNearbyPlaces;
+            $propertyamenitiescreate->BroadbandInternet = $request->BroadbandInternet;
+            $propertyamenitiescreate->SatelliteCableTV = $request->SatelliteCableTV;
+            $propertyamenitiescreate->Intercom = $request->Intercom;
+            $propertyamenitiescreate->Features = $request->Features;
+            $propertyamenitiescreate->DoubleGlazedWindows = $request->DoubleGlazedWindows;
+            $propertyamenitiescreate->CentrallyAirConditioned = $request->CentrallyAirConditioned;
+            $propertyamenitiescreate->CentralHeating = $request->CentralHeating;
+            $propertyamenitiescreate->ElectricityBackup = $request->ElectricityBackup;
+            $propertyamenitiescreate->Furnished = $request->Furnished;
+            $propertyamenitiescreate->ParkingSpaces = $request->ParkingSpaces;
+            $propertyamenitiescreate->StorageAreas = $request->StorageAreas;
+            $propertyamenitiescreate->StudyRoom = $request->StudyRoom;
+            $propertyamenitiescreate->WasteDisposal = $request->WasteDisposal;
+            $propertyamenitiescreate->MaintenanceStaff = $request->MaintenanceStaff;
+            $propertyamenitiescreate->CleaningServices = $request->CleaningServices;
+            $propertyamenitiescreate->CreatedBy = auth()->user()->id;
+            $propertyamenitiescreate->CreateOn =  date('Y-m-d H:i:s');
+            $propertyamenitiescreate->CurrentStatus ="Imageupload";
 
-        if(!$propertyamenitiescreate->save()){
+            if(!$propertyamenitiescreate->save()){
 
-            $updatePropertyDetails = [
-                'CurrentStatus' => 'Imageuploads'
-                ,'UpdatedOn' =>  date('Y-m-d H:i:s')
-                ,'updated_at' => date('Y-m-d H:i:s')
+                $updatePropertyDetails = [
+                    'CurrentStatus' => 'Imageuploads'
+                    ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                    ,'updated_at' => date('Y-m-d H:i:s')
+                    ,'UpdateBy' => auth()->user()->id
+                ];
+                
+                $propretyUpdates = propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails);    
+
+                return redirect()->back()->with("success", "Fail to add amenities try again");
+            }
+            return Redirect::to('propertyr/uploadimages/'.$request->PropertyId)->with(['success' => 'Success add amenities to property!']);
+        }
+        else
+        {
+            // $propertyamenities = propertyamenities::where('PropertyId', $request->PropertyId)->first();
+            $propertyamenitiesupdate = [
+                 'BarbequeArea' => $request->BarbequeArea
+                ,'DayCareCenter' => $request->DayCareCenter
+                ,'KidsPlayArea' => $request->KidsPlayArea
+                ,'LawnOrGarden' => $request->LawnOrGarden
+                ,'CafeteriaOrCanteen' => $request->CafeteriaOrCanteen
+                ,'HealthAndFitness' => $request->HealthAndFitness
+                ,'GymOrHealthClub' => $request->GymOrHealthClub
+                ,'Jacuzzi' => $request->Jacuzzi
+                ,'Sauna' => $request->Sauna
+                ,'SteamRoom' => $request->SteamRoom
+                ,'SwimmingPool' => $request->SwimmingPool
+                ,'FacilitiesForDisabled' => $request->FacilitiesForDisabled
+                ,'LaundryRoom' => $request->LaundryRoom
+                ,'LaundryFacility' => $request->LaundryFacility
+                ,'SharedKitchen' => $request->SharedKitchen
+                ,'CompletionYear' => $request->CompletionYear
+                ,'BalconyOrTerrace' => $request->BalconyOrTerrace
+                ,'LobbyInBuilding' => $request->LobbyInBuilding
+                ,'Flooring' => $request->Flooring
+                ,'ElevatorsInBuilding' => $request->ElevatorsInBuilding
+                ,'ServiceElevators' => $request->ServiceElevators
+                ,'PrayerRoom' => $request->PrayerRoom
+                ,'ReceptionOrWaitingRoom' => $request->ReceptionOrWaitingRoom
+                ,'BusinessCenter' => $request->BusinessCenter
+                ,'SecurityStaff' => $request->SecurityStaff
+                ,'CCTVSecurity' => $request->CCTVSecurity
+                ,'View' => $request->View
+                ,'Floor' => $request->Floor
+                ,'OtherMainFeatures' => $request->OtherMainFeatures
+                ,'Freehold' => $request->Freehold
+                ,'PetPolicy' => $request->PetPolicy
+                ,'OtherRooms' => $request->OtherRooms
+                ,'ATMFacility' => $request->ATMFacility
+                ,'OtherFacilities' => $request->OtherFacilities
+                ,'LandArea' => $request->LandArea
+                ,'NumberOfBathrooms' => $request->NumberOfBathrooms
+                ,'NumberOfBedrooms' => $request->NumberOfBedrooms
+                ,'NearbySchools' => $request->NearbySchools
+                ,'NearbyHospitals' => $request->NearbyHospitals
+                ,'NearbyShoppingMalls' => $request->NearbyShoppingMalls
+                ,'DistanceFromAirport' => $request->DistanceFromAirport
+                ,'NearbyPublicTransport' => $request->NearbyPublicTransport
+                ,'OtherNearbyPlaces' => $request->OtherNearbyPlaces
+                ,'BroadbandInternet' => $request->BroadbandInternet
+                ,'SatelliteCableTV' => $request->SatelliteCableTV
+                ,'Intercom' => $request->Intercom
+                ,'Features' => $request->Features
+                ,'DoubleGlazedWindows' => $request->DoubleGlazedWindows
+                ,'CentrallyAirConditioned' => $request->CentrallyAirConditioned
+                ,'CentralHeating' => $request->CentralHeating
+                ,'ElectricityBackup' => $request->ElectricityBackup
+                ,'Furnished' => $request->Furnished
+                ,'ParkingSpaces' => $request->ParkingSpaces
+                ,'StorageAreas' => $request->StorageAreas
+                ,'StudyRoom' => $request->StudyRoom
+                ,'WasteDisposal' => $request->WasteDisposal
+                ,'MaintenanceStaff' => $request->MaintenanceStaff
+                 ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                 ,'updated_at' => date('Y-m-d H:i:s')
                 ,'UpdateBy' => auth()->user()->id
-             ];
-            
-             $propretyUpdates = propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails);    
-
-            return redirect()->back()->with("success", "Fail to add amenities try again");
-         }
-        return Redirect::to('propertyr/uploadimages/'.$request->PropertyId)->with(['success' => 'Success add amenities to property!']);
+            ];
+            $updatedPropertyDetails = propertyamenities::where('PropertyId', $request->PropertyId)->update($propertyamenitiesupdate);
+            if($updatedPropertyDetails > 0)
+            {
+               return Redirect::to('propertyr/uploadimages/'.$request->PropertyId)->with(['success' => 'Successfully updated property amenities details!']);
+            }
+            return Redirect::to('propertyr/amenities/'.$request->PropertyId)->with(['success' => 'Fail to updated property amenities details try again!']);
+        }
      }
 
      public function uploadimages($id){
@@ -295,12 +372,55 @@ class PropertyDetailsController extends Controller
             //                                     , 'subcategories.SubCategoryName', 'subcategories.SubCategoryName']);
 
         return redirect()->back()->with("success", "Successfully deleted property details!");
-        //return view('propertydetails.list',compact('propertylist'))->with("success", "Successfully deleted property details!");
+        //return view('propertydetails.list',compact('propertylist'))->with("success", "Successfully deleted property details!"); 
         }
         else
         {
-            $propertydetail = propertydetails::where('PropertyId', $request->PropertyId)->get(); 
-
+            $propertydetail = propertydetails::where('PropertyId', $request->PropertyId)->first(); 
+            $selectcategory = category::where('CategoryId', $propertydetail->Category)->first();    
+            $selectsubcategory = subcategory::where('SubCategoryId', $propertydetail->SubCategory)->first();    
+            $userdetails = User::where('id', $propertydetail->AgentId)->first();
+            $agentlist = User::get();
+            $dbcategory = category::where('CurrentStatus', "active")->get();
+            $dbsubcategory = subcategory::where('CurrentStatus', "active")->get();
+            return view('propertydetails.editproperty',compact('dbcategory', 'dbsubcategory', 'agentlist' , 'propertydetail' , 'selectcategory', 'selectsubcategory', 'userdetails'));
         }
+     }
+
+     public function updateproperty(Request $request)
+     {
+            // dd($request);
+            $propertydetail = propertydetails::where('PropertyId', $request->PropertyId)->first(); 
+            $propertiesupdate = [
+                'PermitNumber' => ($request->PermitNumber != null) ? $request->PermitNumber : $propertydetail->PermitNumber
+                ,'Category' => ($request->Category != null) ? $request->Category : $propertydetail->Category
+                ,'SubCategory' => ($request->SubCategory != null) ? $request->SubCategory : $propertydetail->SubCategory
+                ,'Price' => ($request->Price != null) ? $request->Price : $propertydetail->Price
+                ,'Area' => ($request->Area != null) ? $request->Area : $propertydetail->Area
+                ,'Bedroorms' => ($request->Bedroorms != null) ? $request->Bedroorms : $propertydetail->Bedroorms
+                ,'Bathrooms' => ($request->Bathrooms != null) ? $request->Bathrooms : $propertydetail->Bathrooms
+                ,'Purpose' => ($request->Purpose != null) ? $request->Purpose : $propertydetail->Purpose
+                ,'VacatingNoticePeriod' => ($request->VacatingNoticePeriod != null) ? $request->VacatingNoticePeriod : $propertydetail->VacatingNoticePeriod
+                ,'Rent' => ($request->Rent != null) ? $request->Rent : $propertydetail->Rent
+                ,'Furnished' => ($request->Furnished != null) ? $request->Furnished : $propertydetail->Furnished
+                ,'AgentId' => ($request->AgentId != null) ? $request->AgentId : $propertydetail->AgentId
+                ,'City' => ($request->City != null) ? $request->City : $propertydetail->City
+                ,'Address' => ($request->Address != null) ? $request->Address : $propertydetail->Address
+                ,'Description' => ($request->Description != null) ? $request->Description : $propertydetail->Description
+                ,'MaintenanceFee' => ($request->MaintenanceFee != null) ? $request->MaintenanceFee : $propertydetail->MaintenanceFee
+                ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                ,'updated_at' => date('Y-m-d H:i:s')
+                ,'UpdateBy' => auth()->user()->id
+             ];
+            
+             $updatedPropertyDetails = propertydetails::where('PropertyId', $request->PropertyId)->update($propertiesupdate);
+             // dd($updatedPropertyDetails);
+             if($updatedPropertyDetails > 0)
+             {
+                return Redirect::to('propertyr/amenities/'.$request->PropertyId)->with(['success' => 'Successfully updated property details!']);
+             }
+
+             return Redirect::to('propertyr/amenities/'.$request->PropertyId)->with(['success' => 'Fail to updated property details back try again!']);
+             //return redirect()->back()->with("success", "Fail to update property details try again!");
      }
 }

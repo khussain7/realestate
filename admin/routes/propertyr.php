@@ -19,6 +19,8 @@ Route::prefix('propertyr')->group(function () {
     // Get property list 
     Route::get('/propertylist', [PropertyDetailsController::class, 'list'])->middleware(['auth', 'verified'])->name('propertydetails.list');
     Route::post('/actionpage', [PropertyDetailsController::class, 'actionpage'])->middleware(['auth', 'verified'])->name('propertydetails.list');
+    Route::post('/updateproperty', [PropertyDetailsController::class, 'updateproperty'])->middleware(['auth', 'verified'])->name('propertydetails.aminites');
+    
  });
 
 

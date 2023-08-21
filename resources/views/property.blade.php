@@ -38,7 +38,9 @@
 
                                 <div class="image mb-30">
                                     <div class="single-property-gallery">
-                                        <div class="item"><img src="{{ asset('../admin/public/files/'.$BannerImage[0]['ImageName']) }}" alt="{{ $BannerImage[0]['ImageName'] }}"></div>
+                                        <div class="item">
+                                            <img src="{{ asset('../admin/public/files/'.$BannerImage[0]['ImageName']) }}" alt="{{ $BannerImage[0]['ImageName'] }}">
+                                        </div>
                                     @foreach($propertyImages as $pimg)
                                         <img src="{{ asset('../admin/public/files/'.$pimg['ImageName']) }}"  alt="{{ $pimg['ImageName'] }}">
                                          @php ($i++)
