@@ -937,6 +937,7 @@
                   </div>
                @else
                <div class="col-sm-3" style="margin:10px 50px;">
+                  <span class="btn" id="propertydetails" onclick="backtopropertypage()"> << Property Details </span> 
                   <button class="btn">Save</button> 
                </div>
             @endif         

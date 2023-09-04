@@ -266,7 +266,9 @@ class PropertyDetailsController extends Controller
      }
 
      public function uploadimages($id){
-        return view('propertydetails.upload',compact('id'));
+        $propertyimages = propertyimages::where('PropertyId', $id)->get();
+        $insertorupdate = ($propertyimages->count() == 0) ? "insert" : "update";
+        return view('propertydetails.upload',compact('id', 'propertyimages' , 'insertorupdate'));
      }
 
      
@@ -291,6 +293,8 @@ class PropertyDetailsController extends Controller
             $files = $request->file('files');
             $i=1;
            
+            if($request->insertorupdate == 'insert')
+            {
                 foreach($files as $file)
                 {
                     $extension = $file->getClientOriginalExtension();
@@ -340,6 +344,81 @@ class PropertyDetailsController extends Controller
                  $propretyUpdates = propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails);   
 
                   return redirect()->back()->with("success", "Success uploaded images to the property back to list!");
+                }
+                else if($request->insertorupdate == 'update'){
+
+                    foreach($files as $file)
+                    {
+                        $extension = $file->getClientOriginalExtension();
+                        $check=in_array($extension,$allowedfileExtension);
+                        if($check)
+                        {
+                           
+                            $fileName = time().$i.'.'. $extension;
+                            $file->move(public_path('files'), $fileName);
+                            $i +=1;
+    
+                            $propertyimages = new propertyimages;
+                            $propertyimages->PropertyId  = $request->PropertyId;
+                            $propertyimages->ImageName = $fileName;
+                            if($request->bannerindex == 0 && $i == 1)
+                            {
+                                $propertyimages->IsBannner  = "Yes";
+                            }
+                            else{
+                                if($file->getClientOriginalName() == $bannerImgName)
+                                {
+                                    $propertyimages->IsBannner  = "Yes";
+                                }
+                                else{
+                                    $propertyimages->IsBannner  = "No";
+                                }
+                            }
+                            // $propertyimages->IsBannner  = "No";
+                            $propertyimages->CreatedBy = auth()->user()->id;
+                            $propertyimages->CreateOn =  date('Y-m-d H:i:s');
+                            $propertyimages->CurrentStatus ="Imageupload";
+                            $propertyimages->save();
+
+                            $updatePropertyDetails = [
+                                'CurrentStatus' => 'Active'
+                                ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                                ,'updated_at' => date('Y-m-d H:i:s')
+                                ,'UpdateBy' => auth()->user()->id
+                             ];
+                            
+                            propertydetails::where('PropertyId', $request->PropertyId)->update($updatePropertyDetails);   
+
+                            $string = preg_replace('/\.$/', '', $request->deletedlist); //Remove dot at end if exists
+                            $array = explode(', ', $string); //split string into array seperated by ', '
+                            if(count($array) > 0)
+                            {
+                                foreach($array as $value) //loop over values
+                                {
+                                    $updateimage = [
+                                        'CurrentStatus' => 'InActive'
+                                        ,'UpdatedOn' =>  date('Y-m-d H:i:s')
+                                        ,'updated_at' => date('Y-m-d H:i:s')
+                                        ,'UpdateBy' => auth()->user()->id
+                                        ,'IsBannner' => "No"
+                                    ];
+                                    propertyimages::where('Id', $value)->update($updateimage);
+                                }        
+                            }
+
+                            if($request->bannerindex != null)
+                            {
+                              $activeBanner =  propertyimages::where('PropertyId',  $request->PropertyId)
+                                                ->where('IsBannner', "Yes")->first();
+                                                
+                            }
+                            
+                        }
+                    }
+                    
+                    
+
+                }
      }
 
      public function list(){

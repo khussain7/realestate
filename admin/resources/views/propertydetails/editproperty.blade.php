@@ -348,6 +348,7 @@
           <div class="col-sm-12" style="margin-top:10px;">
             <button class="btn btn-danger" id="updatebtn" disabled="true">Update</button> 
             <a href="{{ url('/propertyr/amenities/'.$propertydetail->PropertyId)}}" class="btn" id="amenitiesbtn"> Amenities >>  </a>
+            <a href="{{ url('/propertyr/uploadimages/'.$propertydetail->PropertyId)}}" class="btn" id="amenitiesbtn"> Upload Images >>  </a>
           </div>
                         </form>
                         </div>
