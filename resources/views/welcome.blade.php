@@ -184,7 +184,7 @@
                     <div class="property-inner">
                         <div class="image">
                             <a href="{{ url('/propertiesview/'.$pdata->PropertyId) }}">
-                                <img src="{{ asset('../admin/public/files/'.$pdata->ImageName) }}" class="d-block w-100 img-view"  alt="{{ $pdata->ReferanceNumber }}">
+                                <img src="{{ asset('../admin/public/files/'.$pdata->ImageName) }}" class="d-block w-100 img-view" height="300"  alt="{{ $pdata->ReferanceNumber }}">
                             </a>
                             <ul class="property-feature">
                                 <li>

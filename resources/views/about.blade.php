@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="about-content">
-                                <h3>Welcome to {{ $aboutus[0]->PageHeading}} </h3>
+                                <!-- <h3>Welcome to {{ $aboutus[0]->PageHeading}} </h3> -->
                                 <p>
                                     {!! $aboutus[0]->Description !!}
                                 </p>

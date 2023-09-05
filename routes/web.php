@@ -20,4 +20,5 @@ Route::get('/', ([App\Http\Controllers\PropertydetailsController::class, 'index'
 Route::get('/propertiesview/{id}',[PropertydetailsController::class,'property'])->name('property');
 Route::get('/employees',[EmployeeController::class,'index'])->name('employees');
 Route::get('/aboutus',[EmployeeController::class,'aboutus'])->name('aboutus');
+Route::get('/companyprofile',[EmployeeController::class,'companyprofile'])->name('companyprofile');
 

@@ -9,6 +9,23 @@
 @php ($i=0) @endphp
 @php ($j=0) @endphp
 
+<style>
+    .slick-slide {
+        width: 700px;
+        height: 500px;
+    }
+    .slick-current .slick-active
+    {
+        width: 700px;
+        height: 500px;
+    }
+    .slick-list .draggable
+    {
+        height: 180px !important;
+        overflow: hidden;
+    }
+ </style>
+
 <div class="property-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
         <div class="container">
             <div class="row">
@@ -46,7 +63,7 @@
                                          @php ($i++)
                                     @endforeach 
                                     </div>
-                                    <div class="single-property-thumb">
+                                    <div class="single-property-thumb" style="height: 200px;">
                                     @foreach($propertyImages as $pimg)
                                         <div class="item">
                                         <img src="{{ asset('../admin/public/files/'.$pimg['ImageName']) }}"  alt="{{ $pimg['ImageName'] }}">
@@ -55,10 +72,6 @@
                                             @endforeach
                                     </div>
                                 </div>          
-
-
- 
-                                
                                 
                                 <div class="content">
                                     
@@ -340,7 +353,7 @@
                         </p>
                         <div class="row">
                             <div class="col-md-6 col-12 mb-30">
-                                <h4>Persoanl Info</h4>
+                                <h4 class="title" style="font-size: 15px;text-decoration: underline;">personal information</h4>
                                 <ul>
                                     <li><i class="pe-7s-phone"></i><a href="#">
                                     {{  $EmployeeProfile[0]['contact_number'] }}

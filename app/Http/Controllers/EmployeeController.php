@@ -28,4 +28,10 @@ class EmployeeController extends Controller
         $aboutus = pages::where('PageId', "1")->get();
         return view('about',compact('aboutus'));
     }
+
+    public function companyprofile()
+    {
+        $companyprofile = pages::where('PageId', "2")->first();
+        return view('companyprofile',compact('companyprofile'));
+    }
 }

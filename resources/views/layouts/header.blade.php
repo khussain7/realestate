@@ -54,6 +54,10 @@
                                <li class="">
                                 <a href="{{ url('/aboutus') }}">About Us</a>
                                </li>
+
+                               <li class="">
+                                <a href="{{ url('/companyprofile') }}">Company Profile</a>
+                               </li>
                                
                                <li class="">
                                 <a href="{{ url('/employees') }}">Our Team</a>

@@ -26,7 +26,7 @@
                             <div class="col-md-6 col-12 mb-30">
                                 <h4>Persoanl Info</h4>
                                 <ul>
-                                    <li><i class="pe-7s-map"></i>256, 1st AVE, Manchester 125 , Noth England</li>
+                                    <li><i class="pe-7s-map"></i>  {{ $emp->countryname }} </li>
                                     <li><i class="pe-7s-phone"></i><a href="#">
                                     {{ $emp->contact_number }}
                                     </a></li>
